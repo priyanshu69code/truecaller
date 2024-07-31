@@ -1,6 +1,7 @@
 from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 import phonenumbers
+from django.conf import settings
 
 
 class Contact(models.Model):
@@ -11,6 +12,8 @@ class Contact(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     spam = models.BooleanField(default=False)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE, default=1)
 
     def __str__(self):
         return f"{self.first_name} {self.last_name}"

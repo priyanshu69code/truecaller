@@ -55,10 +55,10 @@ class OTP(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.otp} for {self.user.email}'
+        return f'{self.otp} for {self.user.number}'
 
     def is_expired(self):
-        expired = (timezone.now() - self.created_at).seconds < 600
+        expired = (timezone.now() - self.created_at).seconds > 600
         return expired
 
     def is_valid(self, otp):

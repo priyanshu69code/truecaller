@@ -10,22 +10,21 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
                                      'input_type': 'password'})
     password2 = serializers.CharField(write_only=True, required=True, style={
                                       'input_type': 'password'})
-    phone_number = PhoneNumberField()
+    number = PhoneNumberField()
 
     class Meta:
         model = User
-        fields = ['phone_number', 'password', 'password2',
+        fields = ['number', 'password', 'password2',
                   'email', 'first_name', 'last_name']
 
     def validate(self, data):
-        print(data["phone_number"])
         if data['password'] != data['password2']:
             raise serializers.ValidationError("Passwords do not match.")
         return data
 
     def create(self, validated_data):
         user = User.objects.create_user(
-            number=validated_data.get('phone_number', None),
+            number=validated_data.get('number', None),
             password=validated_data['password'],
             email=validated_data['email'],
             first_name=validated_data['first_name'],

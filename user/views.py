@@ -12,15 +12,19 @@ from rest_framework_simplejwt.views import (
 )
 
 
-class UserRegistrationView(APIView):
-    permission_classes = [AllowAny]
+# class UserRegistrationView(APIView):
+#     permission_classes = [AllowAny]
 
-    def post(self, request):
-        serializer = UserRegistrationSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response({'message': 'Registration successful. Please verify your email.'}, status=HTTP_201_CREATED)
-        return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+#     def post(self, request):
+#         serializer = UserRegistrationSerializer(data=request.data)
+#         if serializer.is_valid():
+#             serializer.save()
+#             return Response({'message': 'Registration successful. Please verify your email.'}, status=HTTP_201_CREATED)
+#         return Response(serializer.errors, status=HTTP_400_BAD_REQUEST)
+
+class UserRegistrationView(generics.CreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserRegistrationSerializer
 
 
 class RequestOTPView(APIView):
