@@ -1,3 +1,12 @@
+from .serializers import ContactDocumentSerializer
+from .documents import ContactDocument
+from django_elasticsearch_dsl_drf.filter_backends import (
+    FilteringFilterBackend,
+    OrderingFilterBackend,
+    DefaultOrderingFilterBackend,
+    SearchFilterBackend
+)
+from django_elasticsearch_dsl_drf.viewsets import DocumentViewSet
 from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -59,3 +68,37 @@ class DetailContactView(generics.RetrieveAPIView):
 
     def get_queryset(self):
         return Contact.objects.filter(user=self.request.user)
+
+
+# views.py
+
+
+class ContactDocumentViewSet(DocumentViewSet):
+    document = ContactDocument
+    serializer_class = ContactDocumentSerializer
+    lookup_field = 'id'
+    filter_backends = [
+        FilteringFilterBackend,
+        OrderingFilterBackend,
+        DefaultOrderingFilterBackend,
+        SearchFilterBackend,
+    ]
+    search_fields = (
+        'first_name',
+        'last_name',
+        'email',
+        'phone',
+    )
+    filter_fields = {
+        'first_name': 'first_name.keyword',
+        'last_name': 'last_name.keyword',
+        'email': 'email',
+        'phone': 'phone',
+    }
+    ordering_fields = {
+        'first_name': 'first_name.keyword',
+        'last_name': 'last_name.keyword',
+        'email': 'email',
+        'phone': 'phone',
+    }
+    ordering = ('first_name.keyword', 'last_name.keyword',)

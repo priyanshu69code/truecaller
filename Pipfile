@@ -9,6 +9,11 @@ django-phonenumber-field = {extras = ["phonenumbers"], version = "*"}
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 pyotp = "*"
+psycopg2-binary = "*"
+django-elasticsearch-dsl = "*"
+faker = "*"
+django-elasticsearch-dsl-drf = "*"
+setuptools = "*"
 
 [dev-packages]
 

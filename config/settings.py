@@ -41,9 +41,11 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    "django_elasticsearch_dsl",
     "phonenumber_field",
     "rest_framework",
     "rest_framework_simplejwt",
+    'django_elasticsearch_dsl_drf',
 ]
 
 LOCAL_APPS = [
@@ -90,6 +92,14 @@ SIMPLE_JWT = {
 }
 
 
+ELASTICSEARCH_DSL = {
+    'default': {
+        'hosts': 'http://localhost:9200',
+        # 'http_auth': ('username', 'password')
+    }
+}
+
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -125,10 +135,23 @@ AUTH_USER_MODEL = 'user.User'
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+# settings.py
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'truecaller',
+        'USER': 'pro1',
+        'PASSWORD': 'Haier@123',
+        'HOST': 'localhost',  # Set to empty string for localhost.
+        'PORT': '5432',       # Set to empty string for default.
     }
 }
 

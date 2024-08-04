@@ -1,3 +1,5 @@
+from .documents import ContactDocument
+from django_elasticsearch_dsl_drf.serializers import DocumentSerializer
 from phonenumber_field.serializerfields import PhoneNumberField
 from .models import Contact
 from rest_framework import serializers
@@ -40,3 +42,16 @@ class MarkSpamContactSerializer(serializers.ModelSerializer):
         extra_kwargs = {
             'spam': {'required': True}
         }
+
+
+class ContactDocumentSerializer(DocumentSerializer):
+    class Meta:
+        document = ContactDocument
+        fields = (
+            'first_name',
+            'last_name',
+            'email',
+            'phone',
+            'spam',
+            'user',
+        )
